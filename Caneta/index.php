@@ -1,5 +1,13 @@
 <?php
 
+interface IVerificador {
+    public function verificaAtributo($valor):bool;
+}
+
+?>
+
+<?php
+
 interface Icaneta {
     public function escrever():bool;
     public function tampar():bool;
@@ -10,7 +18,7 @@ interface Icaneta {
 
 <?php 
 
-class Caneta implements Icaneta {
+class Caneta implements Icaneta, IVerificador  {
     private float $ponta;
     private string $corTinta;
     private int $nivelCarga;
@@ -20,7 +28,7 @@ class Caneta implements Icaneta {
     public function __construct($ponta, $corTinta, $nivelCarga, $marca )
     {
         self::setPonta($ponta);
-        if (!self::verificaCorTinta($corTinta)) {
+        if (!self::verificaAtributo($corTinta)) {
             die;
         }
         self::setNivelCarga($nivelCarga);
@@ -45,7 +53,7 @@ class Caneta implements Icaneta {
     }
     
 
-    private function verificaCorTinta($corTinta): bool
+    public function verificaAtributo($corTinta): bool
     {
         $value = [
             'azul',
@@ -151,7 +159,7 @@ class Caneta implements Icaneta {
 
 <?php 
 
-    $caneta = new Caneta(0.5, 'preta', 100, 'Bic');
+    $caneta = new Caneta(0.5, 'laranja', 100, 'Bic');
 
     echo '<pre>';
     var_dump($caneta);
